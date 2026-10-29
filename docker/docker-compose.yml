@@ -1,8 +1,9 @@
 x-service: &service
   restart: unless-stopped
-  environment:
+  environment: &env
     SPRING_PROFILES_ACTIVE: docker
     SPRING_CONFIG_IMPORT: optional:configserver:http://config-server:8888
+    EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://eureka-server:8761/eureka
     JAVA_TOOL_OPTIONS: -Xmx256m
   depends_on:
     mongo:
@@ -50,18 +51,31 @@ services:
   customer-service:
     <<: *service
     build: ../../customer-service
+    environment:
+      <<: *env
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/customer_db
 
   account-service:
     <<: *service
     build: ../../account-service
+    environment:
+      <<: *env
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/account_db
 
   credit-service:
     <<: *service
     build: ../../credit-service
+    environment:
+      <<: *env
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/credit_db
+
 
   transaction-service:
     <<: *service
     build: ../../transaction-service
+    environment:
+      <<: *env
+      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/transaction_db
 
   report-service:
     <<: *service
