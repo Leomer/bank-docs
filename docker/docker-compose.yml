@@ -92,9 +92,27 @@ services:
   environment:
     <<: *env
     SPRING_MONGODB_URI: mongodb://mongo:27017/auth_db
+  
+  debit-card-service:
+  <<: *service
+  build: ../../debit-card-service
+  environment:
+    <<: *env
+    SPRING_MONGODB_URI: mongodb://mongo:27017/debitcard_db
+
+  yanki-service:
+    <<: *service
+    build: ../../yanki-service
+    environment:
+      <<: *env
+      SPRING_MONGODB_URI: mongodb://mongo:27017/yanki_db
 
 volumes:
   mongo-data:
+
+spring:
+  kafka:
+    bootstrap-servers: kafka:9092
 
 redis:
     image: redis:7
