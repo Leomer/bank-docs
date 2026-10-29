@@ -87,5 +87,12 @@ services:
     ports:
       - "8080:8080"
 
+  auth-service:
+  <<: *service
+  build: ../../auth-service
+  environment:
+    <<: *env
+    SPRING_MONGODB_URI: mongodb://mongo:27017/auth_db
+
 volumes:
   mongo-data:
