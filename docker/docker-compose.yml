@@ -69,7 +69,6 @@ services:
       <<: *env
       SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/credit_db
 
-
   transaction-service:
     <<: *service
     build: ../../transaction-service
@@ -96,3 +95,6 @@ services:
 
 volumes:
   mongo-data:
+
+redis:
+    image: redis:7
